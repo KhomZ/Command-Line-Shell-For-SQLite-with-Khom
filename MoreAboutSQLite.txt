@@ -36,6 +36,7 @@ Command Line Shell For SQLite
 20. Compiling the sqlite3 program from sources
 20.1. Do-It-Yourself Builds
 
+______________________________________________________________________________________________________________________________________________________________________
 1. Getting Started
 
 For example, to create a new SQLite database named "ex1" with a single table named "tbl1", you might do this:
@@ -66,6 +67,8 @@ sqlite> CREATE TABLE tbl2 (
 sqlite>
 -----------------------------------------------------------------------------------
 
+
+______________________________________________________________________________________________________________________________________________________________________
 2. Double-click Startup on Windows
 Windows users can double-click on the sqlite3.exe icon to cause the command-line shell to pop-up a 
 terminal window running SQLite. However, because double-clicking starts the sqlite3.exe without 
@@ -94,6 +97,8 @@ sqlite>
 -----------------------------------------------------------------------------------
 Be careful when using the ".save" command as it will overwrite any preexisting database files having the same name without prompting for confirmation. As with the ".open" command, you might want to use a full pathname with forward-slash directory separators to avoid ambiguity.
 
+
+___________________________________________________________________________________
 3. Special commands to sqlite3 (dot-commands)
 Most of the time, sqlite3 just reads lines of input and passes them on to the SQLite library for execution. But input lines that begin with a dot (".") are intercepted and interpreted by the sqlite3 program itself. These "dot commands" are typically used to change the output format of queries, or to execute certain prepackaged query statements. There were originally just a few dot commands, but over the years many new features have accumulated so that today there over 60.
 
@@ -166,6 +171,8 @@ sqlite> .help
 sqlite>
 -----------------------------------------------------------------------------------
 
+
+___________________________________________________________________________________
 4. Rules for "dot-commands"
 Dot-commands are more restrictive:
 
@@ -174,6 +181,8 @@ The dot-command must be entirely contained on a single input line.
 A dot-command cannot occur in the middle of an ordinary SQL statement. In other words, a dot-command cannot occur at a continuation prompt.
 Dot-commands do not recognize comments.
 
+
+___________________________________________________________________________________
 5. Changing Output Formats
 The sqlite3 program is able to show the results of a query in 14 different formats:
 
@@ -298,6 +307,7 @@ sqlite>
 Other output modes include "html", "json", and "tcl". Try these yourself to see what they do.
 
 
+___________________________________________________________________________________
 6. Querying the database schema
 For example, to see a list of the tables in the database, you can enter ".tables".
 -----------------------------------------------------------------------------------
@@ -352,6 +362,8 @@ sqlite> .databases
 -----------------------------------------------------------------------------------
 ...
 
+
+___________________________________________________________________________________
 7. Redirecting I/O
 7.1. Writing results to a file
 -----------------------------------------------------------------------------------
@@ -453,6 +465,7 @@ sqlite> SELECT * FROM tab;
 -----------------------------------------------------------------------------------
 
 
+___________________________________________________________________________________
 8. Accessing ZIP Archives As Database Files
 A ZIP archive appears to be a database containing a single table with the following schema:
 -----------------------------------------------------------------------------------
@@ -486,6 +499,7 @@ CREATE VIRTUAL TABLE zip USING zipfile('document.docx')
 -----------------------------------------------------------------------------------
 
 
+___________________________________________________________________________________
 9. Converting An Entire Database To An ASCII Text File
 Use the ".dump" command to convert the entire contents of a database into a single ASCII text file. This file can be converted back into a database by piping it back into sqlite3.
 
@@ -503,6 +517,8 @@ $ createdb ex2
 $ sqlite3 ex1 .dump | psql ex2
 -----------------------------------------------------------------------------------
 
+
+___________________________________________________________________________________
 10. Recover Data From a Corrupted Database
 Like the ".dump" command, ".recover" attempts to convert the entire contents of a database file to text. The difference is that instead of reading data using the normal SQL database interface, ".recover" attempts to reassemble the database based on data extracted directly from as many database pages as possible. If the database is corrupt, ".recover" is usually able to recover data from all uncorrupted parts of the database, whereas ".dump" stops when the first sign of corruption is encountered.
 
@@ -523,12 +539,15 @@ sqlite> .recover --lost-and-found orphaned_rows
 -----------------------------------------------------------------------------------
 
 
+___________________________________________________________________________________
 11. Loading Extensions
 You can add new custom application-defined SQL functions, collating sequences, virtual tables, and VFSes to the command-line shell at run-time using the ".load" command. First, convert the extension in to a DLL or shared library (as described in the Run-Time Loadable Extensions document) then type:
 -----------------------------------------------------------------------------------
 sqlite> .load /path/to/my_extension
 -----------------------------------------------------------------------------------
 
+
+___________________________________________________________________________________
 12. Cryptographic Hashes Of Database Content
 The ".sha3sum" dot-command computes a SHA3 hash of the content of the database. To be clear, the hash is computed over the database content, not its representation on disk. This means, for example, that a VACUUM or similar data-preserving transformation does not change the hash.
 
@@ -541,6 +560,7 @@ The ".sha3sum" command takes a single optional argument which is a LIKE pattern.
 The ".sha3sum" command is implemented with the help of the extension function "sha3_query()" that is included with the command-line shell.
 
 
+___________________________________________________________________________________
 13. Database Content Self-Tests
 The ".selftest" command attempts to verify that a database is intact and is not corrupt. The .selftest command looks for a table in schema named "selftest" and defined as follows:
 -----------------------------------------------------------------------------------
@@ -552,6 +572,8 @@ CREATE TABLE selftest(
 );
 -----------------------------------------------------------------------------------
 
+
+___________________________________________________________________________________
 14. SQLite Archive Support
 The ".archive" dot-command and the "-A" command-line option provide built-in support for the SQLite Archive format. The interface is similar to that of the "tar" command on unix systems. Each invocation of the ".ar" command must specify a single command option. The following commands are available for ".archive":
 
@@ -650,6 +672,7 @@ The SQL statements used to implement SQLite Archive operations make use of vario
 4. appendvfs.c — This extension implements a new VFS that allows an SQLite database to be appended to some other file, such as an executable. This extension is only needed if the --append option to the .archive command is used.
 
 
+___________________________________________________________________________________
 15. SQL Parameters
 SQLite allows bound parameters to appear in an SQL statement anywhere that a literal value is allowed. The values for these parameters are set using the sqlite3_bind_...() family of APIs.
 
@@ -664,6 +687,7 @@ CREATE TEMP TABLE sqlite_parameters(
 -----------------------------------------------------------------------------------
 
 
+___________________________________________________________________________________
 16. Index Recommendations (SQLite Expert)
 Note: This command is experimental. It may be removed or the interface modified in incompatible ways at some point in the future.
 
@@ -687,10 +711,12 @@ sqlite> SELECT * FROM x1 WHERE a=? AND b>?;        -- Re-analyze the same SELECT
 -----------------------------------------------------------------------------------
 
 
+___________________________________________________________________________________
 17. Other Dot Commands
 There are many other dot-commands available in the command-line shell. See the ".help" command for a complete list for any particular version and build of SQLite.
 
 
+___________________________________________________________________________________
 18. Using sqlite3 in a shell script
 One way to use sqlite3 in a shell script is to use "echo" or "cat" to generate a sequence of commands in a file, then invoke sqlite3 while redirecting input from the generated command file. This works fine and is appropriate in many circumstances. But as an added convenience, sqlite3 allows a single SQL command to be entered on the command line as a second argument after the database name. When the sqlite3 program is launched with two arguments, the second argument is passed to the SQLite library for processing, the query results are printed on standard output in list mode, and the program exits. This mechanism is designed to make sqlite3 easy to use in conjunction with programs like "awk". For example:
 -----------------------------------------------------------------------------------
@@ -702,10 +728,12 @@ $
 -----------------------------------------------------------------------------------
 
 
+___________________________________________________________________________________
 19. Ending shell commands
 SQLite commands are normally terminated by a semicolon. In the shell you can also use the word "GO" (case-insensitive) or a slash character "/" on a line by itself to end a command. These are used by SQL Server and Oracle, respectively. These won't work in sqlite3_exec(), because the shell translates these into a semicolon before passing them to that function.
 
 
+___________________________________________________________________________________
 20. Compiling the sqlite3 program from sources
 To compile the command-line shell on unix systems and on Windows with MinGW, the usual configure-make command works:
 -----------------------------------------------------------------------------------
@@ -748,3 +776,4 @@ The following additional compile-time options are recommended in order to provid
 -DSQLITE_ENABLE_RTREE
 -DSQLITE_ENABLE_FTS4
 -DSQLITE_ENABLE_FTS5
+______________________________________________________________________________________________________________________________________________________________________
