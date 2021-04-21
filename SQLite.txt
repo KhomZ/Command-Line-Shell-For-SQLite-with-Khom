@@ -21,3 +21,63 @@
 [koder@ArchBox Command-Line-Shell-For-SQLite-with-Khom]$
 
 
+## SQLite ##
+SQLite is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine. SQLite is the most widely deployed SQL database engine in the world. The source code for SQLite is in the public domain.
+
+## Contents ##
+1	Installation
+2	Using sqlite3 command line shell
+2.1	Create a database
+2.2	Create table
+2.3	Insert data
+2.4	Search database
+3	Graphical tools
+4	Using sqlite in shell script
+5	See also>>> https://wiki.archlinux.org/index.php/SQLite
+
+Installation
+Install the sqlite package.
+
+Related packages are:
+
+>> sqlite-doc – most of the static HTML files that comprise this website, including all of the SQL Syntax and the C/C++ interface specs and other miscellaneous documentation [1]
+>> sqlite-analyzer – sqlite3_analyzer is a command-line utility program that measures and displays how much and how efficiently space is used by individual tables and indexes with an SQLite database file [2]
+>> sqlite-tcl – the Tcl interface to the SQLite library [3]
+>> php-sqlite – sqlite3 module for PHP (do not forget to enable it in /etc/php/php.ini)
+>> ruby-sqlite3 – Ruby bindings for the SQLite3 embedded database
+>> gambas3-gb-db-sqlite3 – Gambas3 Sqlite3 database access component
+
+## Using sqlite3 command line shell ##
+The SQLite library includes a simple command-line utility named sqlite3 that allows the user to manually enter and execute SQL commands against an SQLite database.
+
+Create a database
+$ sqlite3 databasename
+
+Create table
+sqlite> create table tblone(one varchar(10), two smallint);
+
+Insert data
+sqlite> insert into tblone values('helloworld',20);
+sqlite> insert into tblone values('archlinux', 30);
+
+Search database
+sqlite> select * from tblone;
+helloworld|20
+archlinux|30
+
+## Graphical tools ##
+-> DB Browser for SQLite — High quality, visual, open source tool to create, design, and edit database files compatible with SQLite.
+https://sqlitebrowser.org/ || sqlitebrowser
+-> Sqliteman — Simple sqlite3 browser and editor.
+http://sqliteman.yarpen.cz/ || sqlitemanAUR
+For tools supporting multiple DBMSs, see List of applications/Documents#Database tools.
+
+Using sqlite in shell script
+See forum post.
+
+See also
+SQLite homepage
+SQLite Hammer
+Using SQLite - Oreilly Book
+SQLite - Apress Book
+Category: Relational DBMSs
